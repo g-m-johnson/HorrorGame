@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "PickupActor_Master.h"
 #include "ItemDataStruct.generated.h"
 
 
@@ -21,20 +22,35 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TObjectPtr<UTexture2D> Icon;
 
+	/* Item Description */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	FText ItemDescription;
+
 	/** Total amount that can be stacked */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int32 MaxStackAmount = 0;
 
 	/** Actor respresented by struct */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	TSubclassOf<class AActor> PickupActor;
+	TSubclassOf<class APickupActor_Master> PickupActor;
 
 	/** Can use it? */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool CanBeUsed = true;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanBeExamined = true;
+
 	/** Can drop it? */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool CanBeDropped = true;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UStaticMesh* ExaminationMesh;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float ExaminationMeshOffset = 20.f;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	FRotator ExaminationMeshRotation;
 };

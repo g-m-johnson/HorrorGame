@@ -14,10 +14,11 @@ AFirstPersonCharacterBase::AFirstPersonCharacterBase()
 	PrimaryActorTick.bCanEverTick = true;
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	CameraComponent->SetupAttachment(GetMesh());
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArmComponent->SetupAttachment(CameraComponent);
-	SpotlightComponent = CreateDefaultSubobject<USpotLightComponent>(TEXT("Spotlight"));
-	SpotlightComponent->SetupAttachment(SpringArmComponent);
+	Flashlight = CreateDefaultSubobject<USpotLightComponent>(TEXT("Spotlight"));
+	Flashlight->SetupAttachment(SpringArmComponent);
 
 	SetupCameraComponent();
 	SetupSpringArmComponent();
@@ -48,6 +49,7 @@ void AFirstPersonCharacterBase::SetupPlayerInputComponent(UInputComponent* Playe
 void AFirstPersonCharacterBase::SetupCameraComponent()
 {
 	CameraComponent->AddRelativeLocation(FVector(0, 0, 60));
+	CameraComponent->bUsePawnControlRotation = true;
 }
 
 void AFirstPersonCharacterBase::SetupSpringArmComponent()
@@ -60,7 +62,7 @@ void AFirstPersonCharacterBase::SetupSpringArmComponent()
 
 void AFirstPersonCharacterBase::SetupSpotlightComponent()
 {
-	SpotlightComponent->AddRelativeLocation(FVector(0, 0, 60));
-	SpotlightComponent->AttenuationRadius = 1200;
+	Flashlight->AddRelativeLocation(FVector(0, 0, 60));
+	Flashlight->AttenuationRadius = 1200;
 }
 

@@ -5,7 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
-#include "InventoryItem_Master.h"
+//#include "InventoryItem_Master.h"
+#include "FirstPersonCharacterBase.h"
 
 #include "PickupActor_Master.generated.h"
 
@@ -13,7 +14,8 @@ class USceneComponent;
 class UWidgetComponent;
 class UStaticMeshComponent;
 class USphereComponent;
-class InventoryItem_Master;
+class AInventoryItem_Master;
+
 
 UCLASS()
 class HORRORGAME_API APickupActor_Master : public AActor
@@ -32,16 +34,21 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY()
+	UFUNCTION()
+	void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+	void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	USceneComponent* DefaultSceneRoot;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UWidgetComponent* PromptWidget;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UStaticMeshComponent* StaticMesh;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	USphereComponent* Sphere;
 
 protected:
@@ -52,8 +59,8 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Default", meta = (DisplayPriority = "1"))
 	bool bShouldUpdateActor = false;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Default", meta = (DisplayPriority = "1"))
-	TSubclassOf<ACharacter> PlayerRef;
+	UPROPERTY(BlueprintReadWrite, Category = "Default", meta = (DisplayPriority = "1"))
+	AFirstPersonCharacterBase* PlayerRef;
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Default", meta = (DisplayPriority = "1"))
@@ -65,7 +72,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Default", meta = (DisplayPriority = "1"))
 	float WidgetDistanceAboveMesh = 50.f;
 
-private:
+protected:
+	
+	UFUNCTION(BlueprintNativeEvent)
 	void UpdateWidget();
 
 };

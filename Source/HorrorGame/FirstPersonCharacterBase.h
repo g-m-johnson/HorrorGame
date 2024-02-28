@@ -34,13 +34,19 @@ public:
 	void SetupSpringArmComponent();
 	void SetupSpotlightComponent();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	UCameraComponent* CameraComponent;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	USpringArmComponent* SpringArmComponent;
 
-	UPROPERTY(EditAnywhere)
-	USpotLightComponent* SpotlightComponent;
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	USpotLightComponent* Flashlight;
 
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ShortenPlayerCapsule();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void LengthenPlayerCapsule();
 };
